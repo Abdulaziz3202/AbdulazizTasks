@@ -13,7 +13,8 @@ namespace MVCRESTAPI.Modles
         
         [Required]
         public string Line { get; set; }
-        
+
+        [MaxLength(250)]
         public string Platform { get; set; }
     }
 }

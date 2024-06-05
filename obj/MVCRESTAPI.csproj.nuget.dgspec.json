@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WorkSpace\\MVCRESTAPI\\MVCRESTAPI.csproj": {}
+    "D:\\Workspace\\MVCRESTAPI\\MVCRESTAPI.csproj": {}
   },
   "projects": {
-    "D:\\WorkSpace\\MVCRESTAPI\\MVCRESTAPI.csproj": {
+    "D:\\Workspace\\MVCRESTAPI\\MVCRESTAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WorkSpace\\MVCRESTAPI\\MVCRESTAPI.csproj",
+        "projectUniqueName": "D:\\Workspace\\MVCRESTAPI\\MVCRESTAPI.csproj",
         "projectName": "MVCRESTAPI",
-        "projectPath": "D:\\WorkSpace\\MVCRESTAPI\\MVCRESTAPI.csproj",
-        "packagesPath": "C:\\Users\\MY LAPTOP\\.nuget\\packages\\",
-        "outputPath": "D:\\WorkSpace\\MVCRESTAPI\\obj\\",
+        "projectPath": "D:\\Workspace\\MVCRESTAPI\\MVCRESTAPI.csproj",
+        "packagesPath": "C:\\Users\\iab19\\.nuget\\packages\\",
+        "outputPath": "D:\\Workspace\\MVCRESTAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\MY LAPTOP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\iab19\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -65,6 +69,10 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[6.0.7, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
             }
           },
           "imports": [
@@ -73,10 +81,29 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.30, 6.0.30]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.30, 6.0.30]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.30, 6.0.30]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.30, 6.0.30]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -85,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

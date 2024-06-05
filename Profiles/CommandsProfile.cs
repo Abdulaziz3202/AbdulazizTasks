@@ -11,10 +11,14 @@ namespace MVCRESTAPI.Profiles
         {
 
             //Source -> Target
-            CreateMap<Command, CommandReadDto>();
-            CreateMap<CommandCreateDto, Command>();
-           CreateMap<CommandUpdateDto, Command>();
-            CreateMap<Command, CommandUpdateDto>();
+            CreateMap<Command, CommandReadDto>().ReverseMap(); ;
+            CreateMap<CommandCreateDto, Command>().ReverseMap();
+            CreateMap<CommandUpdateDto, Command>().ReverseMap();
+            CreateMap<Command, CommandUpdateDto>().ReverseMap();
+
+
+            /*CreateMap<GovHospitalTotal, BIHospitalResultDto>()
+            .ForMember(targetObj => targetObj.Wplace, sourceObj => sourceObj.MapFrom(i => i.GhtWplace));*/
         }
 
 
