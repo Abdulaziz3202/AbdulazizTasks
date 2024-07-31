@@ -106,3 +106,7 @@ D:\Workspace\MVCRESTAPI\bin\Debug\net6.0\NetTopologySuite.IO.ShapeFile.Extended.
 D:\Workspace\MVCRESTAPI\bin\Debug\net6.0\NetTopologySuite.IO.ShapeFile.dll
 D:\Workspace\MVCRESTAPI\bin\Debug\net6.0\NetTopologySuite.IO.dll
 D:\Workspace\MVCRESTAPI\bin\Debug\net6.0\NetTopologySuite.IO.GeoJSON.dll
+D:\Workspace\MVCRESTAPI\bin\Debug\net6.0\Microsoft.Extensions.Http.dll
+D:\Workspace\MVCRESTAPI\bin\Debug\net6.0\Microsoft.Extensions.Http.Polly.dll
+D:\Workspace\MVCRESTAPI\bin\Debug\net6.0\Polly.dll
+D:\Workspace\MVCRESTAPI\bin\Debug\net6.0\Polly.Extensions.Http.dll

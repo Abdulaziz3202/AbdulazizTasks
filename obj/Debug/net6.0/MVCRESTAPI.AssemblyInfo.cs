@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MVCRESTAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+475eae834a49fc0dd18fa5bfec5d473d1a580ff5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11b27d25af2bb78197029fb450aabe68b34360e7")]
 [assembly: System.Reflection.AssemblyProductAttribute("MVCRESTAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MVCRESTAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
