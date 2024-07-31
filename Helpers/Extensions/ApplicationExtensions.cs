@@ -1,7 +1,7 @@
 ﻿
 using System.Reflection;
 
-namespace MVCRESTAPI.Helpers
+namespace MVCRESTAPI.Helpers.Extensions
 {
     public static class ApplicationExtensions
     {
@@ -78,9 +78,9 @@ namespace MVCRESTAPI.Helpers
             Type underlyingType = Nullable.GetUnderlyingType(type);
             if (underlyingType != null)
             {
-                return IsNumericCore(underlyingType);
+                return underlyingType.IsNumericCore();
             }
-            return IsNumericCore(type);
+            return type.IsNumericCore();
         }
 
         // Helper method to check if a Type is numeric

@@ -12,6 +12,9 @@ using MVCRESTAPI.Services.CommandService;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Serilog;
+using Serilog.Exceptions;
+using MVCRESTAPI.Helpers.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,11 +25,14 @@ builder.Services.AddDbContext<CommanderContext>(opt => opt.UseSqlServer(builder.
 builder.Services.AddControllers().AddNewtonsoftJson(options => {
     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-});
+}).AddJsonOptions(options =>
+{
+    // for GeoMetry Serlization purposes
+    options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
+}); ;
 
 
-builder.Services.AddScoped<ICommandService, CommandService>();
-builder.Services.AddScoped<IUserService, UserService>();
+
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -48,6 +54,9 @@ builder.Services.AddCors(
 
               )
           );
+// Additional service registration
+builder.Services.AddMyDependencyGroup();
+
 builder.Services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 builder.Services.AddEndpointsApiExplorer();
 
@@ -58,7 +67,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo
     {
 
-        Title = "MOH Data Sources",
+        Title = "REST API",
 
         Version = "v1"
     });
@@ -87,31 +96,19 @@ builder.Services.AddSwaggerGen(c =>
     c.OperationFilter<SwaggerBaseUrlFilter>();
 });
 
+Log.Logger = new LoggerConfiguration().Enrich.WithExceptionDetails().CreateBootstrapLogger();
+
+builder.Host.UseSerilog(((ctx, lc) => lc
+.ReadFrom.Configuration(ctx.Configuration)));
+
+
 var app = builder.Build();
 app.UseCors(builder.Configuration.GetSection("App:Domain").Value); // Enable CORS!
+app.UseSerilogRequestLogging();
 
-app.Use(async (context, next) =>
-{
-    string path = context.Request.Path.Value;
 
-    if (path.StartsWith("/swagger"))
-    {
 
-        context.Response.Headers.Add("Content-Security-Policy",
-        "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
-            $"img-src 'self' data:; font-src 'self' data:; connect-src 'self' {builder.Configuration.GetSection("App:ServerRootAddress").Value};");
 
-        //ServerRootAddress
-    }
-    else
-    {
-        // Apply your default CSP configuration for other pages
-        context.Response.Headers.Add("Content-Security-Policy",
-            "default-src 'self';");
-    }
-
-    await next();
-});
 app.UseSwagger(c =>
 {
     var basePath = builder.Configuration.GetSection("Swagger:BasePath").Value;
