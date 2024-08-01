@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
-using MVCRESTAPI.Data;
 using MVCRESTAPI.Dtos;
-using MVCRESTAPI.Modles;
+using MVCRESTAPI.EntityFrameworkCore;
+using MVCRESTAPI.Models;
 
 namespace MVCRESTAPI.Services.CommandService
 {

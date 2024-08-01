@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using MVCRESTAPI.Data;
+using MVCRESTAPI.EntityFrameworkCore;
 using MVCRESTAPI.Dtos;
-using MVCRESTAPI.Modles;
+using MVCRESTAPI.Models;
 using MVCRESTAPI.Services.CommandService;
 
 namespace MVCRESTAPI.Controllers

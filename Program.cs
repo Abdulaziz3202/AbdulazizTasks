@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Microsoft.OpenApi.Models;
-using MVCRESTAPI.Data;
 using MVCRESTAPI.Helpers;
 using MVCRESTAPI.Helpers.Swagger;
 using MVCRESTAPI.Services.AuthenticationService;
@@ -15,6 +14,8 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using Serilog;
 using Serilog.Exceptions;
 using MVCRESTAPI.Helpers.Extensions;
+using MVCRESTAPI.EntityFrameworkCore;
+using MVCRESTAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,6 +106,7 @@ builder.Host.UseSerilog(((ctx, lc) => lc
 var app = builder.Build();
 app.UseCors(builder.Configuration.GetSection("App:Domain").Value); // Enable CORS!
 app.UseSerilogRequestLogging();
+app.UseCustomExceptionMiddleware();
 
 
 

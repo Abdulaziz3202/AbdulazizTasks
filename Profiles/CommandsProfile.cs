@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MVCRESTAPI.Dtos;
-using MVCRESTAPI.Modles;
+using MVCRESTAPI.Models;
 
 namespace MVCRESTAPI.Profiles
 {
