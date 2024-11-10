@@ -1,8 +1,8 @@
-﻿using MVCRESTAPI.Controllers.ControllersHelper;
+﻿using KPMGTask.Controllers.ControllersHelper;
 using Newtonsoft.Json;
 using System.Net;
 
-namespace MVCRESTAPI.Middlewares
+namespace KPMGTask.Middlewares
 {
     public class CustomExceptionMiddleware
     {

@@ -1,42 +1,80 @@
-using Microsoft.AspNetCore.Authentication;
+
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+
 using Microsoft.Extensions.Primitives;
 using Microsoft.OpenApi.Models;
-using MVCRESTAPI.Helpers;
-using MVCRESTAPI.Helpers.Swagger;
-using MVCRESTAPI.Services.AuthenticationService;
-using MVCRESTAPI.Services.AuthenticationService.AuthHelper;
-using MVCRESTAPI.Services.CommandService;
+
+using KPMGTask.Helpers.Swagger;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Serilog;
 using Serilog.Exceptions;
-using MVCRESTAPI.Helpers.Extensions;
-using MVCRESTAPI.EntityFrameworkCore;
-using MVCRESTAPI.Middlewares;
+using KPMGTask.Helpers.Extensions;
+using KPMGTask.EntityFrameworkCore;
+using KPMGTask.Middlewares;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using KPMGTask.Models;
+using KPMGTask.Services.AuthenticationServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using KPMGTask.Services.TransactionServices;
+using KPMGTask.Services.TransactionServices.Dto;
+using KPMGTask.Dtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 // Add services to the container.
 
 //declare the DbContext that we are using it and connect it with the connection string 
-builder.Services.AddDbContext<CommanderContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("CommanderConnection")));
-builder.Services.AddControllers().AddNewtonsoftJson(options => {
-    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-}).AddJsonOptions(options =>
-{
-    // for GeoMetry Serlization purposes
-    options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
-}); ;
+builder.Services.AddDbContext<AppDBContextContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-
-
+// Register Identity services (this includes UserManager, SignInManager, etc.)
+builder.Services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
+        .AddEntityFrameworkStores<AppDBContextContext>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    o.RequireHttpsMetadata = false;
+    o.SaveToken = false;
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidIssuer = builder.Configuration["JWT:Issuer"],
+        ValidAudience = builder.Configuration["JWT:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
+
+builder.Services.AddScoped<IAuthService, AuthService>(); // Register your AuthService
+builder.Services.AddScoped<ITransactionServices, TransactionServices>();
+
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});
+
+
+
+
+
 builder.Services.AddCors(
               options => options.AddPolicy(
                    builder.Configuration.GetSection("App:Domain").Value,
@@ -55,13 +93,15 @@ builder.Services.AddCors(
 
               )
           );
+
+
+
+
 // Additional service registration
 builder.Services.AddMyDependencyGroup();
 
-builder.Services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSwaggerGen(c =>
 {
 
@@ -72,13 +112,14 @@ builder.Services.AddSwaggerGen(c =>
 
         Version = "v1"
     });
-    c.AddSecurityDefinition("basic", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "basic",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Basic Authorization header using the Bearer scheme."
+        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -88,7 +129,7 @@ builder.Services.AddSwaggerGen(c =>
                 Reference=new OpenApiReference
                 {
                     Type=ReferenceType.SecurityScheme,
-                    Id="basic"
+                    Id="Bearer"
                 }
             },
             new string[] {}
@@ -103,7 +144,18 @@ builder.Host.UseSerilog(((ctx, lc) => lc
 .ReadFrom.Configuration(ctx.Configuration)));
 
 
+builder.Services.AddDistributedMemoryCache(); // Registers the memory cache for session storage
+builder.Services.AddSession(); // Registers session services that will use the distributed cache
+builder.Services.AddHttpContextAccessor(); // Register HttpContextAccessor (useful for getting HttpContext)
+builder.Services.AddAuthorization(); // Authorization doesn't directly depend on other services, but it comes after context
+builder.Services.AddScoped<TransactionServices>(); // Register your Transaction services (shouldn't depend on session/cache or context directly)
+builder.Services.AddSingleton<KPMGTask.Middlewares.WebSocketManager>(); // Register WebSocketManager as a singleton
+
+
 var app = builder.Build();
+
+
+
 app.UseCors(builder.Configuration.GetSection("App:Domain").Value); // Enable CORS!
 app.UseSerilogRequestLogging();
 app.UseCustomExceptionMiddleware();
@@ -151,8 +203,10 @@ app.Use((context, next) =>
     return next();
 });
 
-app.UseAuthorization();
+app.UseAuthentication(); // This is required to authenticate JWT tokens
 
+app.UseAuthorization();
+app.UseWebSockets();
 app.MapControllers();
 
 app.Run();

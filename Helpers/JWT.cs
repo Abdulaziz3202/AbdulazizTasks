@@ -1,4 +1,4 @@
-﻿namespace MVCRESTAPI.Helpers
+﻿namespace KPMGTask.Helpers
 {
     public class JWT
     {

@@ -1,7 +1,7 @@
 ﻿
 using System.Reflection;
 
-namespace MVCRESTAPI.Helpers.Extensions
+namespace KPMGTask.Helpers.Extensions
 {
     public static class ApplicationExtensions
     {

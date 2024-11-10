@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MVCRESTAPI.Controllers.ControllersHelper
+namespace KPMGTask.Controllers.ControllersHelper
 {
     public static class ControllerExtensions
     {

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Workspace\\MVCRESTAPI\\MVCRESTAPI.csproj": {}
+    "D:\\Infograph-projects-workspace\\MVCRESTAPIC-Template\\MVCRESTAPI.csproj": {}
   },
   "projects": {
-    "D:\\Workspace\\MVCRESTAPI\\MVCRESTAPI.csproj": {
+    "D:\\Infograph-projects-workspace\\MVCRESTAPIC-Template\\MVCRESTAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Workspace\\MVCRESTAPI\\MVCRESTAPI.csproj",
+        "projectUniqueName": "D:\\Infograph-projects-workspace\\MVCRESTAPIC-Template\\MVCRESTAPI.csproj",
         "projectName": "MVCRESTAPI",
-        "projectPath": "D:\\Workspace\\MVCRESTAPI\\MVCRESTAPI.csproj",
-        "packagesPath": "C:\\Users\\iab19\\.nuget\\packages\\",
-        "outputPath": "D:\\Workspace\\MVCRESTAPI\\obj\\",
+        "projectPath": "D:\\Infograph-projects-workspace\\MVCRESTAPIC-Template\\MVCRESTAPI.csproj",
+        "packagesPath": "C:\\Users\\MY LAPTOP\\.nuget\\packages\\",
+        "outputPath": "D:\\Infograph-projects-workspace\\MVCRESTAPIC-Template\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\iab19\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MY LAPTOP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -118,7 +118,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

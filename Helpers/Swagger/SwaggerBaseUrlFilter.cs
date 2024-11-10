@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace MVCRESTAPI.Helpers.Swagger
+namespace KPMGTask.Helpers.Swagger
 {
     public class SwaggerBaseUrlFilter : IOperationFilter
     {

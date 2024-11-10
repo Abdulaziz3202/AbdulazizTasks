@@ -1,7 +1,7 @@
 ﻿using Polly.Retry;
 using Polly;
 
-namespace MVCRESTAPI.Helpers
+namespace KPMGTask.Helpers
 {
     public class PollyClientPolicy
     {

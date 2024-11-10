@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 
-namespace MVCRESTAPI.Helpers
+namespace KPMGTask.Helpers
 {
     public class GeometryJsonConverter : JsonConverter<Geometry>
     {

@@ -1,7 +1,8 @@
-﻿using MVCRESTAPI.Services.AuthenticationService;
-using MVCRESTAPI.Services.CommandService;
+﻿
 
-namespace MVCRESTAPI.Helpers.Extensions
+using KPMGTask.Services.AuthenticationServices;
+
+namespace KPMGTask.Helpers.Extensions
 {
     public static  class ServicesCollection
     {
@@ -20,8 +21,9 @@ namespace MVCRESTAPI.Helpers.Extensions
                 });
 
 
-            services.AddScoped<ICommandService, CommandService>();
-            services.AddScoped<IUserService, UserService>();
+            /*  services.AddScoped<ICommandService, CommandService>();
+              services.AddScoped<IUserService, UserService>();*/
+            services.AddScoped<IAuthService, AuthService>();
             return services;
         
         }

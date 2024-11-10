@@ -1,4 +1,4 @@
-﻿namespace MVCRESTAPI.Controllers.ControllersHelper
+﻿namespace KPMGTask.Controllers.ControllersHelper
 {
     public class ApiResponse<T>
     {
